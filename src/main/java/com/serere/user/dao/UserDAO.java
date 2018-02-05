@@ -5,6 +5,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public interface UserDAO extends CrudRepository<User, Integer> {
     List<User> findByUsername(String username);
 
     //Return SortedStuff
-    @Query(value = "SELECT u FROM User u WHERE u.username = ?1")
-    List<User> getSortedUsername(String username, Pageable pageable);
+    @Query(value = "SELECT u FROM User u WHERE u.username = :username")
+    List<User> getSortedUsername(@Param(value = "username") String username, Pageable pageable);
 
     @Query(value = "SELECT u FROM User u")
     List<User> getPagedList(Pageable pageable);

@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
     <title>User CRUD</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{/css/mdb.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<form action="create" method="post">
-    <table>
-        <tr>
-            <td>Username</td>
-            <td><input type="text" name="username"/></td>
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password"/></td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td><input type="email" name="email"/></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" value="Submit"/></td>
-        </tr>
-    </table>
-</form>
+<header>
+    <h1>Spring Boot and Thymeleaf</h1>
+    <h4>Creating a User</h4>
+</header>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4">
+            <!--<form action="#" th:action="@{/create}" th:object="${user}" method="post">-->
+            <br/>
+            <form action="#" th:action="@{/create}" method="post">
+                <input id="name" type="text" name="username"/>
+                <label for="name">Username</label>
+                <input id="password" type="password" name="password"/>
+                <label for="password">Password</label>
+                <input id="email" type="email" name="email"/>
+                <label for="email">Email</label><br/>
+                <button th:class="'btn btn-dark'" type="submit">Create Account</button>
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>
+</div>
+
 </body>
 </html>

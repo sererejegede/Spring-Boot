@@ -3,34 +3,58 @@ package com.serere.user.controllers;
 import com.serere.user.User;
 import com.serere.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.List;
 
 @RestController
-//@Controller
+//@RequestMapping(value = "")
+public class UserController implements ErrorController{
 
-//@RequestMapping
-// (value = "")
-public class UserController {
+    private static final String ERRPATH = "/error";
+
+   @Override
+    public String getErrorPath() {
+        return ERRPATH;
+    }
+
+    @RequestMapping(value = ERRPATH)
+    public String err(){
+       return "Page not Found!";
+    }
 
     @RequestMapping(value = "/")
-    public ModelAndView home(){
-        ModelAndView m = new ModelAndView();
-        m.setViewName("index");
-        return m;
+    public ModelAndView home(ModelAndView model){
+        model.setViewName("index");
+        return model;
+    }
+
+    @PostMapping(value = "/create")
+    public ModelAndView view(User user){
+        ModelAndView modelShow = new ModelAndView();
+        userService.createUser(user);
+        modelShow.addObject("users", userService.getAlluser());
+        modelShow.setViewName("view");
+        return modelShow;
+    }
+
+    @GetMapping(value = "/create")
+    public ModelAndView showAll(ModelAndView show){
+        show.addObject("users", userService.getAlluser());
+        show.setViewName("view");
+        return show;
     }
 
     @Autowired
     private UserService userService;
 
-    @PostMapping(value = "/create")
-    public User createUser(User user){
-        return userService.createUser(user);
-    }
+//    @PostMapping(value = "/create")
+//    public void createUser(User user){
+//        userService.createUser(user);
+//    }
 
     @GetMapping(value = "/view/{userId}")
     public User readFromUser(@PathVariable("userId") Integer userId){
@@ -69,5 +93,6 @@ public class UserController {
     public List<User> sortedPagedList(@PathVariable("username") String username, @PathVariable("sorting") String sorting){
         return userService.sortedPagedList(username, new PageRequest(0, 5, Sort.Direction.ASC, sorting));
     }
+
 
 }
