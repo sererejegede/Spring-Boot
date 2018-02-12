@@ -12,19 +12,21 @@ import java.util.List;
 
 @RestController
 //@RequestMapping(value = "")
-public class UserController implements ErrorController{
+public class UserController{
+//    public class UserController implements ErrorController{
 
-    private static final String ERRPATH = "/error";
 
-   @Override
-    public String getErrorPath() {
-        return ERRPATH;
-    }
-
-    @RequestMapping(value = ERRPATH)
-    public String err(){
-       return "Page not Found!";
-    }
+//    private static final String ERRPATH = "/error";
+//
+//   @Override
+//    public String getErrorPath() {
+//        return ERRPATH;
+//    }
+//
+//    @RequestMapping(value = ERRPATH)
+//    public String err(){
+//       return "Page not Found!";
+//    }
 
     @RequestMapping(value = "/")
     public ModelAndView home(ModelAndView model){
@@ -41,7 +43,7 @@ public class UserController implements ErrorController{
         return modelShow;
     }
 
-    @GetMapping(value = "/create")
+    @GetMapping(value = "/view/viewAll")
     public ModelAndView showAll(ModelAndView show){
         show.addObject("users", userService.getAlluser());
         show.setViewName("view");
@@ -61,17 +63,17 @@ public class UserController implements ErrorController{
         return userService.getUser(userId);
     }
 
-    @RequestMapping(value = "/viewAll")
-    public Iterable<User> getAllUsers(){
-        return userService.getAlluser();
-    }
+//    @RequestMapping(value = "/view/viewAll")
+//    public Iterable<User> getAllUsers(){
+//        return userService.getAlluser();
+//    }
 
-    @DeleteMapping(value = "/delete/{userId}")
+    @DeleteMapping(value = "/view/delete/{userId}")
     public void deleteUser(@PathVariable("userId") Integer userId){
         userService.deleteUser(userId);
     }
 
-    @PutMapping(value = "/edit/{userId}/{newPassword}")
+    @PutMapping(value = "/view/edit/{userId}/{newPassword}")
     public User updateDetail(@PathVariable("userId") Integer userId, @PathVariable("newPassword") String newPassword){
         return userService.updateUser(userId, newPassword);
     }

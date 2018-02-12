@@ -22,4 +22,7 @@ public interface UserDAO extends CrudRepository<User, Integer> {
 
     @Query(value = "SELECT u FROM User u")
     List<User> getPagedList(Pageable pageable);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM user")
+    List<User> allUsers();
 }
